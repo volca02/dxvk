@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../log/log.h"
+#include "../util_string.h"
+#include "../util_reftracker.h"
+
 #include <functional>
 
 namespace dxvk {
@@ -22,6 +26,7 @@ namespace dxvk {
     
     Rc(T* object)
     : m_object(object) {
+      REF_CREATE(m_object, 1);
       this->incRef();
     }
     
@@ -102,14 +107,21 @@ namespace dxvk {
     T* m_object = nullptr;
     
     void incRef() const {
-      if (m_object != nullptr)
-        m_object->incRef();
+        if (m_object != nullptr) {
+          auto count = m_object->incRef();
+          REF_BUMP(m_object, count);
+        }
     }
     
     void decRef() const {
       if (m_object != nullptr) {
-        if (m_object->decRef() == 0)
+        auto count = m_object->decRef();
+        if (count == 0) {
+          REF_DESTROY(m_object);
           delete m_object;
+        } else {
+          REF_BUMP(m_object, count);
+        }
       }
     }
     

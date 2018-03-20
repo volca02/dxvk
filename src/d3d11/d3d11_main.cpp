@@ -64,6 +64,9 @@ extern "C" {
       return E_INVALIDARG;
     }
     
+    auto rt = dxvkAdapter->GetRefTracker();
+    linkRefTracker(rt);
+
     // Feature levels to probe if the
     // application does not specify any.
     std::array<D3D_FEATURE_LEVEL, 6> defaultFeatureLevels = {

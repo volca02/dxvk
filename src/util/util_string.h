@@ -26,4 +26,11 @@ namespace dxvk::str {
     return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(ws);
   }
   
+  template<typename T>
+  inline std::string hex(T v) {
+    std::stringstream stream;
+    stream << std::internal << std::hex << v;
+    return stream.str();
+  }
+  
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../dxvk/dxvk_include.h"
+#include "../util/util_reftracker.h"
 
 #include "dxgi_include.h"
 
@@ -60,7 +61,7 @@ namespace dxvk {
 MIDL_INTERFACE("907bf281-ea3c-43b4-a8e4-9f231107b4ff")
 IDXGIAdapterPrivate : public IDXGIAdapter1 {
   static const GUID guid;
-  
+
   virtual dxvk::Rc<dxvk::DxvkAdapter> STDMETHODCALLTYPE GetDXVKAdapter() = 0;
   
   /**
@@ -77,6 +78,8 @@ IDXGIAdapterPrivate : public IDXGIAdapter1 {
   virtual dxvk::DxgiFormatInfo STDMETHODCALLTYPE LookupFormat(
           DXGI_FORMAT          format,
           dxvk::DxgiFormatMode mode) = 0;
+
+  virtual std::shared_ptr<dxvk::RefTracker> STDMETHODCALLTYPE GetRefTracker() = 0;
 };
 
 

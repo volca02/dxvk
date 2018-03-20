@@ -14,7 +14,8 @@ namespace dxvk {
           DxgiFactory*      factory,
     const Rc<DxvkAdapter>&  adapter)
   : m_factory (factory),
-    m_adapter (adapter) {
+    m_adapter (adapter),
+    m_refTracker (refTracker()) {
     SetupFormatTable();
   }
   
@@ -169,6 +170,10 @@ namespace dxvk {
     return DxgiFormatInfo();
   }
   
+  std::shared_ptr<RefTracker> STDMETHODCALLTYPE DxgiAdapter::GetRefTracker() {
+      return m_refTracker;
+  }
+
   
   HRESULT DxgiAdapter::GetOutputFromMonitor(
           HMONITOR              Monitor,

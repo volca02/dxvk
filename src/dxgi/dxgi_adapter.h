@@ -52,6 +52,8 @@ namespace dxvk {
     DxgiFormatInfo STDMETHODCALLTYPE LookupFormat(
             DXGI_FORMAT format, DxgiFormatMode mode) final;
     
+    std::shared_ptr<RefTracker> STDMETHODCALLTYPE GetRefTracker() final;
+    
     HRESULT GetOutputFromMonitor(
             HMONITOR              Monitor,
             IDXGIOutput**         ppOutput);
@@ -65,6 +67,8 @@ namespace dxvk {
     
     FormatMap         m_colorFormats;
     FormatMap         m_depthFormats;
+    
+    std::shared_ptr<RefTracker> m_refTracker;
     
     void AddColorFormatTypeless(
             DXGI_FORMAT                       srcFormat,

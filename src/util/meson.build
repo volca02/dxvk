@@ -1,5 +1,6 @@
 util_src = files([
   'util_env.cpp',
+  'util_reftracker.cpp',
   
   'com/com_guid.cpp',
   'com/com_private_data.cpp',
